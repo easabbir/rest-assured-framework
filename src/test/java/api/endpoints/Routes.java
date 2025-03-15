@@ -10,16 +10,18 @@ Delete user (Delete):   https://petstore.swagger.io/v2/user/{username}
 
  */
 public class Routes {
-   public static String base_url= "https://petstore.swagger.io/v2" ;
+   public static String base_url= "https://restful-booker.herokuapp.com" ;
 
-   //User module
+   //Booking module
 
-    public static String post_url = base_url + "/user" ;
-    public static String get_url = base_url + "/user/{username}" ;
-    public static String update_url = base_url + "/user/{username}" ;
-    public static String delete_url = base_url + "/user/{username}" ;
+    public static String createToken_url = base_url + "/auth" ;
+    public static String createBooking_url = base_url + "/booking" ;
+    public static String getBooking_url = base_url + "/booking/{id}" ;
+    public static String updateBooking_url = base_url + "/booking/{id}" ;
+    public static String partialUpdateBooking_url = base_url + "/booking/{id}" ;
+    public static String deleteBooking_url = base_url + "/booking/{id}" ;
 
-    //Store Module
+    //Next Module
         //Here need to create module URL's
 
 
