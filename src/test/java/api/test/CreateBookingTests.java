@@ -6,6 +6,7 @@ import api.payload.BookingDates;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.javafaker.Faker;
 import io.restassured.response.Response;
+import lombok.Getter;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import java.text.SimpleDateFormat;
@@ -14,15 +15,21 @@ import java.util.Date;
 import static java.util.Calendar.DAY_OF_MONTH;
 import static org.hamcrest.Matchers.equalTo;
 
-public class BookingTests extends BaseTest {
+public class CreateBookingTests extends BaseTest {
 
     Faker faker;
-    Booking bookingPayload;
+
+    @Getter
+    static Booking bookingPayload;
     BookingDates bookingDatesPayload;
     Auth authPayload;
     Calendar calendar = Calendar.getInstance();
-    String token;
-    int bookingId;
+
+    @Getter
+    static String token;
+
+    @Getter
+    static int bookingId;
 
     @BeforeClass
     public void setupData() throws JsonProcessingException {
@@ -44,13 +51,15 @@ public class BookingTests extends BaseTest {
         bookingPayload.setBookingdates(bookingDatesPayload);
         bookingPayload.setAdditionalneeds(faker.food().dish());
 
+        // Create auth payload
         authPayload = new Auth();
         authPayload.setUsername("admin");
         authPayload.setPassword("password123");
     }
 
-    @Test(priority = 1)
+    @Test(priority = 1,groups = {"regression","smoke"})
     public void testAuthTest(){
+
 
         Response response = BookingEndPoints.createToken(authPayload);
         token = response.jsonPath().getString("token");
@@ -62,7 +71,7 @@ public class BookingTests extends BaseTest {
         System.out.println("created token: " + token);
 
     }
-    @Test
+    @Test(groups = {"regression","smoke"})
     public void testCreateBooking(){
         Response response = BookingEndPoints.createBooking(bookingPayload);
         response.then().statusCode(200);
@@ -70,11 +79,11 @@ public class BookingTests extends BaseTest {
         //response.prettyPrint();
         //response.then().log().all();
         bookingId = response.jsonPath().getInt("bookingid");
-        System.out.println("creatd booking id : " + bookingId);
+        System.out.println("created booking id : " + bookingId);
 
     }
 
-    @Test
+    @Test(groups = {"regression"})
     public void testCheckoutDateIsCurrentDatePlusOneDay() {
         // Get the current date plus one day
         Calendar calendar = Calendar.getInstance();
@@ -93,7 +102,7 @@ public class BookingTests extends BaseTest {
                 .body("booking.bookingdates.checkout", equalTo(expectedCheckoutDateStr)); // Validate the checkout date in the response
     }
 
-    @Test
+    @Test(groups = {"regression"})
     public void testCheckoutDateHandlesLeapYear() {
         // Mock the current date to be February 28, 2024 (leap year)
         Calendar calendar = Calendar.getInstance();
@@ -117,7 +126,7 @@ public class BookingTests extends BaseTest {
                 .body("booking.bookingdates.checkout", equalTo(expectedCheckoutDateStr)); // Should be February 29, 2024
     }
 
-    @Test
+    @Test(groups = {"regression"})
     public void testCheckoutDateHandlesMonthTransition() {
         // Mock the current date to be the last day of the month
         Calendar calendar = Calendar.getInstance();

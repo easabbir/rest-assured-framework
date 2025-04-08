@@ -21,7 +21,7 @@ public class BookingEndPoints {
         return response;
     }
 
-    public static Response getBooking(String bookingId)
+    public static Response getBooking(int bookingId)
     {
         Response response = given ()
                 .pathParam("id" , bookingId)
@@ -44,11 +44,12 @@ public class BookingEndPoints {
         return response;
     }
 
-    public static Response updateBooking( Booking payload, String bookingId)
+    public static Response updateBooking( Booking payload, int bookingId)
     {
         Response response = given ()
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
+                .pathParam("id" , bookingId)
                 .body(payload)
                 .when()
                 .put(Routes.updateBooking_url);
@@ -56,17 +57,20 @@ public class BookingEndPoints {
         return response;
     }
 
-    public static Response updateBookingPartially( Booking payload, String bookingId)
+    public static Response updateBookingPartially( Booking payload, int bookingId, String token)
     {
         Response response = given ()
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
+                .pathParam("id" , bookingId)
+                .header("Cookie", "token=" + token)
                 .body(payload)
                 .when()
                 .patch(Routes.partialUpdateBooking_url);
 
         return response;
     }
+
 
     public static Response deleteBooking(String bookingId)
     {

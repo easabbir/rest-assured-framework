@@ -43,3 +43,27 @@ step: 7 Create data driven test
 
 -----------
 
+## Common commands to Run the project in CI pipeline
+```
+maven phases
+1. clean
+2. validate
+3. compile
+4. test 
+5. package
+6. install
+7. deploy
+```
+
+```
+1. running the tests
+mvn test
+This command runs all the unit tests in the project.
+It is the most basic command to ensure that your code passes all the tests.
+```
+```
+2. running the tests using groups eg smoke, regression
+   mvn test -Dgroups=groupName
+   This command runs all the unit tests in the project.
+   It is the most basic command to ensure that your code passes all the tests.
+```
