@@ -3,10 +3,11 @@
 
     <test name="Create Booking" preserve-order="true">
         <classes>
+            <class name="api.test.AuthTest"/>
             <class name="api.test.CreateBookingTests"/>
             <class name="api.test.GetBookingTests"/>
+            <class name="api.test.UpdateBookingTests"/>
         </classes>
-
 
     </test>
 </suite>

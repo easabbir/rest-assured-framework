@@ -44,11 +44,13 @@ public class BookingEndPoints {
         return response;
     }
 
-    public static Response updateBooking( Booking payload, int bookingId)
+    public static Response updateBooking( Booking payload, int bookingId, String token)
     {
         Response response = given ()
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
+                .accept("application/json")
+                .header("Cookie", "token=" + token)
                 .pathParam("id" , bookingId)
                 .body(payload)
                 .when()

@@ -22,11 +22,7 @@ public class CreateBookingTests extends BaseTest {
     @Getter
     static Booking bookingPayload;
     BookingDates bookingDatesPayload;
-    Auth authPayload;
     Calendar calendar = Calendar.getInstance();
-
-    @Getter
-    static String token;
 
     @Getter
     static int bookingId;
@@ -51,26 +47,9 @@ public class CreateBookingTests extends BaseTest {
         bookingPayload.setBookingdates(bookingDatesPayload);
         bookingPayload.setAdditionalneeds(faker.food().dish());
 
-        // Create auth payload
-        authPayload = new Auth();
-        authPayload.setUsername("admin");
-        authPayload.setPassword("password123");
     }
 
-    @Test(priority = 1,groups = {"regression","smoke"})
-    public void testAuthTest(){
 
-
-        Response response = BookingEndPoints.createToken(authPayload);
-        token = response.jsonPath().getString("token");
-
-        response.then().statusCode(200);
-
-//        response.prettyPrint();
-//        response.then().log().all();
-        System.out.println("created token: " + token);
-
-    }
     @Test(groups = {"regression","smoke"})
     public void testCreateBooking(){
         Response response = BookingEndPoints.createBooking(bookingPayload);
