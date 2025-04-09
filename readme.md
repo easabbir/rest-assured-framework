@@ -57,13 +57,14 @@ maven phases
 
 ```
 1. running the tests
-mvn test
-This command runs all the unit tests in the project.
-It is the most basic command to ensure that your code passes all the tests.
+   mvn test
+   This command runs all the unit tests in the project.
+   It is the most basic command to ensure that your code passes all the tests.
 ```
 ```
 2. running the tests using groups eg smoke, regression
-   mvn test -Dgroups=groupName
+   mvn test -Dfile="testng.xml"
+
    This command runs all the unit tests in the project.
    It is the most basic command to ensure that your code passes all the tests.
 ```
