@@ -76,9 +76,12 @@ public class BookingEndPoints {
     }
 
 
-    public static Response deleteBooking(String bookingId)
+    public static Response deleteBooking(int bookingId, String token)
     {
         Response response = given ()
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .header("Cookie", "token=" + token)
                 .pathParam("id" , bookingId)
                 .when()
                 .delete(Routes.deleteBooking_url);

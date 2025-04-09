@@ -8,6 +8,7 @@
             <class name="api.test.GetBookingTests"/>
             <class name="api.test.UpdateBookingPartially"/>
             <class name="api.test.UpdateBookingTests"/>
+            <class name="api.test.DeleteBookingTests"/>
         </classes>
 
     </test>
