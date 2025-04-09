@@ -11,8 +11,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v4
 
+      # Set up JDK
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
@@ -20,26 +23,21 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
-      - name: Run Tests with Allure
+      # Install dependencies and run tests
+      - name: Run Tests with Maven
         run: mvn test -Dfile="testng.xml"
 
+      # Generate Allure Report
       - name: Generate Allure Report
         run: |
+          mvn allure:report
           mvn allure:serve &
           sleep 10
 
-      - name: Archive Allure Report
+      # Archive Allure Results
+      - name: Archive Allure Results
         uses: actions/upload-artifact@v4
         with:
-          name: allure-report
+          name: allure-results
           path: allure-results
           if-no-files-found: error
-
-      # Replace or remove this step based on action availability
-      #- name: Upload Allure Report
-      #  if: always()
-      #  uses: simple-elf/allure-report-action@v2
-      #  with:
-      #    allure_results: target/allure-results
-      #    repo_token: ${{ secrets.GITHUB_TOKEN }}
-      #    keep_history: true
