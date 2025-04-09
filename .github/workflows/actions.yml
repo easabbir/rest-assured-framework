@@ -1,4 +1,4 @@
-name: Java CI with Maven
+name: Java CI with Maven and Allure
 
 on:
   push:
@@ -20,14 +20,25 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
-      - name: Run Tests
+      - name: Run Tests with Allure
         run: mvn test -Dfile="testng.xml"
 
-      - name: Upload Test Reports
-        if: always() # Upload reports even if tests fail
+      - name: Generate Allure Report
+        run: |
+          mvn allure:serve &
+          sleep 10
+
+      - name: Archive Allure Report
         uses: actions/upload-artifact@v4
         with:
-          name: test-reports
-          path: |
-            target/surefire-reports/
-            target/failsafe-reports/
+          name: allure-report
+          path: target/allure-results
+          if-no-files-found: error
+
+      - name: Upload Allure Report
+        if: always()
+        uses: simple-elf/allure-report-action@v2
+        with:
+          allure_results: target/allure-results
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          keep_history: true
