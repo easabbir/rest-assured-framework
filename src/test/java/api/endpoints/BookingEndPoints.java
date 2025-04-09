@@ -1,6 +1,7 @@
 package api.endpoints;
 import api.payload.Auth;
 import api.payload.Booking;
+import api.payload.BookingPartial;
 import io.restassured.response.Response;
 import io.restassured.http.ContentType;
 import static io.restassured.RestAssured.*;
@@ -59,13 +60,14 @@ public class BookingEndPoints {
         return response;
     }
 
-    public static Response updateBookingPartially( Booking payload, int bookingId, String token)
+    public static Response updateBookingPartially(BookingPartial payload, int bookingId, String token)
     {
         Response response = given ()
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
-                .pathParam("id" , bookingId)
+                .accept("application/json")
                 .header("Cookie", "token=" + token)
+                .pathParam("id" , bookingId)
                 .body(payload)
                 .when()
                 .patch(Routes.partialUpdateBooking_url);

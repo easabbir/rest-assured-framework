@@ -21,7 +21,7 @@ public class UpdateBookingTests extends BaseTest{
     int bookingId ;
     String token;
     Faker faker;
-    Booking BookingPayload ;;
+    Booking BookingPayload ;
     @BeforeClass
     public void setupData() throws JsonProcessingException {
 
