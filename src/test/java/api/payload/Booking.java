@@ -10,7 +10,6 @@ public class Booking {
     double totalprice;
     boolean depositpaid;
     BookingDates bookingdates;
-    String phone;
     String additionalneeds;
 
 
