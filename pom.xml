@@ -20,6 +20,7 @@
           <!--suppress UnresolvedMavenProperty -->
           <suiteXmlFiles>${file}</suiteXmlFiles>
         </configuration>
+
       </plugin>
 
       <!-- Allure Maven Plugin -->
@@ -33,6 +34,8 @@
           <reportDirectory>${project.build.directory}/allure-report</reportDirectory>
         </configuration>
       </plugin>
+
+      
 
 
     </plugins>
