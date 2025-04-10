@@ -9,6 +9,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Required for gh-pages deployment
 
     steps:
       # Checkout the repository
@@ -22,6 +24,17 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: 'maven'
+
+      # Cache Maven dependencies
+      - name: Cache Maven dependencies
+        uses: actions/cache@v3
+        with:
+                path: |
+                  ~/.m2/repository
+                  target/surefire-reports
+                key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+                restore-keys: |
+                  ${{ runner.os }}-maven-
 
       # Install dependencies and run tests
       - name: Run Tests with Maven
@@ -47,6 +60,6 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         if: always()
         with:
-          github_token: ${{ secrets.TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
           publish_dir: allure-history
