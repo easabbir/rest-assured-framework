@@ -23,6 +23,17 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
+      # Cache Maven dependencies
+      - name: Cache Maven dependencies
+        uses: actions/cache@v3
+        with:
+                path: |
+                  ~/.m2/repository
+                  target/surefire-reports
+                key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+                restore-keys: |
+                  ${{ runner.os }}-maven-
+
       # Install dependencies and run tests
       - name: Run Tests with Maven
         run: mvn test -Dfile="testng.xml"
